@@ -8,6 +8,7 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -23,11 +24,8 @@ jobs:
 
       - name: Deploy storybook
         working-directory: ./packages/docs
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          REMOTE_URL="https://x-access-token:${GH_TOKEN}@github.com/JoaoNaif/design-system.git"
           npm run deploy-storybook -- \
             --ci \
             --existing-output-dir=storybook-static \
-            --git-remote=$REMOTE_URL
+            --git-remote=https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/JoaoNaif/design-system.git
