@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - main
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -21,6 +19,9 @@ jobs:
       - run: npm ci
 
       - run: npm run build
+
+      - name: Setup git credentials
+        run: git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/JoaoNaif/design-system.git
 
       - name: Deploy storybook
         working-directory: ./packages/docs
