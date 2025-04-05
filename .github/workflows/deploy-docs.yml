@@ -23,8 +23,11 @@ jobs:
 
       - name: Deploy storybook
         working-directory: ./packages/docs
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          REMOTE_URL="https://x-access-token:${GH_TOKEN}@github.com/JoaoNaif/design-system.git"
           npm run deploy-storybook -- \
             --ci \
             --existing-output-dir=storybook-static \
-            --git-remote=https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/JoaoNaif/design-system.git
+            --git-remote=$REMOTE_URL
